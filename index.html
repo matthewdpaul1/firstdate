@@ -233,20 +233,6 @@
   .music.playing .play-ico { display: none; }
   .music:not(.playing) .bars { display: none; }
   .bars i { background: var(--ink) !important; }
-  .hero-play {
-    display: inline-flex; align-items: center; gap: .6rem;
-    margin-top: 1.75rem; padding: .7rem 1.2rem .7rem .75rem;
-    border: 1px solid rgba(255,255,255,.35); border-radius: 999px;
-    background: rgba(255,255,255,.1); color: #fff; cursor: pointer;
-    font: 600 .95rem/1 var(--sans); backdrop-filter: blur(6px);
-  }
-  .hero-play span.dot {
-    width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--glow);
-    display: inline-grid; place-items: center;
-  }
-  .hero-play span.dot::after { content: ""; margin-left: 2px; border-style: solid; border-width: .32rem 0 .32rem .5rem; border-color: transparent transparent transparent var(--ink); }
-  .hero-play.playing span.dot::after { margin: 0; width: .55rem; height: .6rem; border: 0; border-left: 3px solid var(--ink); border-right: 3px solid var(--ink); }
-  .hero-play:hover { background: rgba(255,255,255,.18); }
   .music[hidden] { display: none; }
   .bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 1rem; }
   .bars i { width: 3px; height: 30%; background: var(--glow); border-radius: 2px; }
@@ -297,7 +283,6 @@
     <p class="kicker">You, me, and a Wednesday night</p>
     <h1><span>Wednesday,</span><span>October 28</span></h1>
     <p class="lede">I have three ideas for Wednesday night. You pick the one that sounds best, and I'll take care of the rest.</p>
-    <button class="hero-play" id="hero-play" type="button"><span class="dot" aria-hidden="true"></span><span id="hero-play-label">Press play before you scroll</span></button>
 
     <section class="evening" aria-label="When each option happens">
       <h2>How the evening could go</h2>
@@ -438,17 +423,8 @@
   });
 
   requestAnimationFrame(() => document.body.classList.add('ready'));
+  document.getElementById('song').addEventListener('play', () => document.getElementById('music').classList.add('played'), { once: true });
 
-  // The hero prompt drives the same music button (music.js owns playback)
-  const heroPlay = document.getElementById('hero-play');
-  heroPlay.addEventListener('click', () => document.getElementById('music').click());
-  new MutationObserver(() => {
-    const m = document.getElementById('music'); if (!m) return;
-    const on = m.classList.contains('playing');
-    if (on) m.classList.add('played');
-    heroPlay.classList.toggle('playing', on);
-    document.getElementById('hero-play-label').textContent = on ? 'Pause the music' : 'Press play before you scroll';
-  }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class'] });
 
   // ---------- Picking a ticket ----------
   const updateSubmit = () => {
@@ -470,6 +446,8 @@
     document.getElementById('dinner-q').disabled = false;
     updateSubmit();
   }));
+
+  document.querySelectorAll('input[name="dinner"]').forEach(r => r.addEventListener('change', updateSubmit));
 
   // ---------- Send: emails the pick via FormSubmit ----------
   const form = document.getElementById('pick');
