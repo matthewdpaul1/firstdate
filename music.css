@@ -1,0 +1,134 @@
+/* ---------- "San Francisco" popup (created by music.js) ---------- */
+.sf-pop {
+  --sf-gap: 1.25rem;                         /* matches .music right/bottom */
+  --sf-btn: 2.75rem;                         /* height of the music button */
+  position: fixed;
+  right: var(--sf-gap);
+  bottom: calc(var(--sf-gap) + var(--sf-btn) + .75rem);
+  z-index: 11;
+  width: min(20.5rem, 100vw - 2 * var(--sf-gap));
+  pointer-events: none;
+}
+.sf-pop[hidden] { display: none; }
+
+.sf-pop__card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.1rem;
+  background: var(--night, #121433);
+  border: 1px solid rgba(245, 184, 61, .35);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .06) inset,
+    0 18px 40px -12px rgba(8, 8, 30, .7),
+    0 0 0 6px rgba(245, 184, 61, .06);
+  color: #fff;
+  pointer-events: auto;
+  transform-origin: calc(100% - 2.2rem) 100%;
+}
+
+/* Little tail pointing down at the music button */
+.sf-pop::after {
+  content: "";
+  position: absolute;
+  right: 1.9rem;
+  bottom: -.42rem;
+  width: .85rem; height: .85rem;
+  background: var(--night, #121433);
+  border-right: 1px solid rgba(245, 184, 61, .35);
+  border-bottom: 1px solid rgba(245, 184, 61, .35);
+  transform: rotate(45deg);
+  border-bottom-right-radius: .2rem;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);   /* only the half below the card */
+  pointer-events: none;
+}
+
+/* ---------- The postcard art: sunset, bridge, fog ---------- */
+.sf-pop__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 300 / 76;
+  background: linear-gradient(to bottom, #D9718F 0%, #A84E8C 45%, var(--haze, #6B3F8F) 80%, var(--dusk, #2D2466) 100%);
+}
+.sf-pop__sun { fill: var(--glow, #F5B83D); opacity: .9; }
+.sf-pop__bridge { fill: none; stroke: #E0503A; stroke-linecap: round; stroke-linejoin: round; }
+.sf-pop__cable { stroke-width: 1.6; }
+.sf-pop__hangers { stroke-width: .7; opacity: .8; }
+.sf-pop__deck { stroke-width: 3; }
+.sf-pop__tower { stroke-width: 2.4; }
+.sf-pop__water { fill: var(--dusk, #2D2466); }
+.sf-pop__fog { fill: #F6F3FB; opacity: .55; filter: blur(5px); }
+.sf-pop__fog ellipse:nth-child(2) { opacity: .8; }
+
+.sf-pop__text {
+  padding: .9rem 2.6rem 1.05rem 1.1rem;
+  font: 500 1rem/1.4 var(--sans, system-ui, sans-serif);
+  color: rgba(255, 255, 255, .92);
+  text-wrap: pretty;
+}
+.sf-pop__kicker {
+  display: block;
+  margin-bottom: .15rem;
+  font: 400 1.45rem/1.1 var(--serif, Georgia, serif);
+  letter-spacing: -.01em;
+  color: var(--glow, #F5B83D);
+}
+
+.sf-pop__close {
+  position: absolute;
+  right: .55rem;
+  bottom: .7rem;
+  display: grid; place-items: center;
+  width: 1.9rem; height: 1.9rem;
+  border: 0; border-radius: 50%;
+  background: rgba(255, 255, 255, .08);
+  color: rgba(255, 255, 255, .75);
+  cursor: pointer;
+  transition: background .15s, color .15s;
+}
+.sf-pop__close:hover { background: rgba(245, 184, 61, .2); color: var(--glow, #F5B83D); }
+.sf-pop__close svg { width: .8rem; height: .8rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+
+/* ---------- Motion ---------- */
+.sf-pop.is-in .sf-pop__card { animation: sf-spring .7s cubic-bezier(.34, 1.56, .64, 1) both; }
+.sf-pop.is-in::after { animation: sf-tail .7s cubic-bezier(.34, 1.56, .64, 1) both; }
+.sf-pop.is-in .sf-pop__fog { animation: sf-fog 9s ease-in-out infinite alternate; }
+.sf-pop.is-in .sf-pop__sun { animation: sf-sun 1.4s cubic-bezier(.22, 1, .36, 1) .1s both; }
+.sf-pop.is-out .sf-pop__card { animation: sf-out .3s ease-in both; }
+.sf-pop.is-out::after { opacity: 0; transition: opacity .15s; }
+
+@keyframes sf-spring {
+  0%   { opacity: 0; transform: translateY(1.1rem) scale(.88) rotate(1.5deg); }
+  45%  { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+/* the tail keeps its 45deg turn while it springs */
+@keyframes sf-tail {
+  0%   { opacity: 0; transform: translateY(1.1rem) rotate(45deg) scale(.6); }
+  45%  { opacity: 1; }
+  100% { opacity: 1; transform: rotate(45deg); }
+}
+@keyframes sf-out { to { opacity: 0; transform: translateY(.6rem) scale(.96); } }
+@keyframes sf-fog { from { transform: translateX(-10px); } to { transform: translateX(12px); } }
+@keyframes sf-sun { from { transform: translateY(14px); opacity: 0; } to { transform: none; opacity: .9; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .sf-pop.is-in .sf-pop__card,
+  .sf-pop.is-in::after { animation: sf-fade .25s ease-out both; }   /* opacity only, so the tail keeps its rotate */
+  .sf-pop.is-in .sf-pop__fog,
+  .sf-pop.is-in .sf-pop__sun { animation: none; }
+  .sf-pop.is-out .sf-pop__card { animation: sf-fade .2s ease-in reverse both; }
+  @keyframes sf-fade { from { opacity: 0; } to { opacity: 1; } }
+}
+
+/* ---------- Phones: nearly full width, still sitting above the button ---------- */
+@media (max-width: 560px) {
+  .sf-pop {
+    --sf-gap: 1rem;
+    left: var(--sf-gap);
+    right: var(--sf-gap);
+    width: auto;
+    bottom: calc(1.25rem + var(--sf-btn) + .7rem);
+  }
+  .sf-pop__kicker { font-size: 1.35rem; }
+}
