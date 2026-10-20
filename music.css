@@ -1,7 +1,7 @@
 /* ---------- "San Francisco" popup (created by music.js) ---------- */
 .sf-pop {
   --sf-gap: 1.25rem;                         /* matches .music right/bottom */
-  --sf-btn: 2.75rem;                         /* height of the music button */
+  --sf-btn: 3.25rem;                         /* height of the music button */
   position: fixed;
   right: var(--sf-gap);
   bottom: calc(var(--sf-gap) + var(--sf-btn) + .75rem);

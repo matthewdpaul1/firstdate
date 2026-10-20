@@ -44,7 +44,7 @@
   /* ---------- Hero ---------- */
   header { position: relative; padding: clamp(4rem, 10vw, 7.5rem) 0 3rem; overflow: hidden; }
   .hero-text { position: relative; }
-  .kicker { font-weight: 600; font-size: 1.05rem; color: rgba(28,26,51,.8); }
+  .kicker { font-weight: 600; font-size: 1.05rem; color: rgba(28,26,51,.75); letter-spacing: .01em; }
   h1 {
     margin-top: 0.75rem;
     font: 400 clamp(3.6rem, 12.5vw, 10rem)/0.88 var(--serif);
@@ -53,13 +53,17 @@
   }
   h1 span { display: block; }
   h1 span + span { color: #fff; text-shadow: 0 2px 30px rgba(45,36,102,.35); }
-  .lede { max-width: 31rem; margin-top: 1.75rem; font-size: 1.25rem; line-height: 1.5; }
+  .lede { max-width: 30rem; margin-top: 1.75rem; font-size: 1.3rem; line-height: 1.5; color: rgba(255,255,255,.94); }
 
   /* ---------- The evening, hour by hour ---------- */
-  .evening { position: relative; margin-top: 4rem; }
-  .evening h2 { font: 600 1rem/1 var(--sans); opacity: .85; margin-bottom: 1.25rem; }
+  .evening {
+    position: relative; margin-top: 3.75rem; padding: 1.75rem 1.75rem 1.5rem;
+    border-radius: 1.4rem; background: rgba(18,20,51,.28);
+    border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(6px);
+  }
+  .evening h2 { font: 400 1.35rem/1 var(--serif); margin-bottom: 1.5rem; }
   .ruler { position: relative; height: 9rem; }
-  .ruler-key { margin-top: 2.6rem; font-size: .85rem; opacity: .8; }
+  .ruler-key { position: absolute; top: 1.85rem; right: 1.75rem; font-size: .85rem; opacity: .8; }
   .ruler-key i { display: inline-block; width: 1.4rem; height: .7rem; margin-right: .4rem; vertical-align: -1px; border-radius: .35rem; border: 1.5px dashed var(--glow); }
   .tick { position: absolute; top: 0; bottom: 1.75rem; border-left: 1px dashed rgba(255,255,255,.28); }
   .tick b { position: absolute; bottom: -1.75rem; left: 0; transform: translateX(-50%); font: 500 .85rem/1 var(--sans); opacity: .8; white-space: nowrap; }
@@ -74,18 +78,19 @@
   }
   .ready .slot { animation: draw .9s cubic-bezier(.2,.7,.2,1) backwards; }
   .slot small { font-weight: 400; opacity: .85; }
+  .slot .short { display: none; }
   .slot.dinner { background: rgba(255,255,255,.12) !important; border: 1.5px dashed var(--glow); box-shadow: none; }
   @keyframes draw { from { transform: scaleX(0); opacity: 0; } to { transform: none; opacity: 1; } }
 
   /* ---------- Tickets ---------- */
-  main { padding: 3rem 0 2rem; }
-  .intro { max-width: 34rem; margin-bottom: 2.5rem; font-size: 1.15rem; opacity: .92; }
+  main { padding: 2.5rem 0 1rem; }
+  .intro { max-width: 32rem; margin-bottom: 2.25rem; font-size: 1.15rem; opacity: .9; }
   .ticket {
     --c: var(--comedy);
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 18rem) minmax(0, 1fr) 13rem;
-    margin-bottom: 2.25rem;
+    margin-bottom: 2.75rem;
     color: var(--ink);
     filter: drop-shadow(0 18px 40px rgba(5,6,25,.45));
     transition: transform .25s ease;
@@ -108,7 +113,7 @@
     font: 600 .8rem/1 var(--sans);
   }
   .ticket.rioja .art img { object-position: 72% 50%; }
-  .ticket .body { padding: 2rem 2rem 2rem 2.25rem; }
+  .ticket .body { padding: 2.25rem 2.5rem; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
   .stub {
     position: relative;
     border-radius: 0 1.1rem 1.1rem 0;
@@ -124,14 +129,14 @@
     background-color: var(--paper);
     transition: transform .45s cubic-bezier(.3,.7,.2,1);
   }
-  .tag { display: inline-block; font: 700 .8rem/1 var(--sans); color: var(--c); letter-spacing: .02em; }
+  .tag { display: inline-block; padding: .4rem .7rem; border-radius: 999px; font: 700 .78rem/1 var(--sans); color: var(--c); background: color-mix(in srgb, var(--c) 10%, transparent); }
   .ticket h3 { margin-top: .5rem; font: 400 clamp(1.9rem, 3.4vw, 2.6rem)/1.02 var(--serif); color: var(--c); letter-spacing: -.01em; }
   .venue { margin-top: .4rem; font-weight: 600; }
-  .desc { margin-top: 1rem; max-width: 36rem; }
-  .plan { margin-top: 1.25rem; display: grid; grid-template-columns: 4.6rem 1fr; gap: .45rem .9rem; font-size: .975rem; }
-  .plan dt { font-weight: 700; color: var(--c); font-variant-numeric: tabular-nums; }
+  .desc { margin-top: 1rem; max-width: 36rem; color: #3D3958; line-height: 1.65; }
+  .plan { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid color-mix(in srgb, var(--c) 18%, transparent); display: grid; grid-template-columns: auto 1fr; gap: .7rem 1rem; font-size: .975rem; align-items: baseline; }
+  .plan dt { min-width: 4.4rem; text-align: center; padding: .3rem .55rem; border-radius: .5rem; font-weight: 700; font-size: .85rem; color: var(--c); background: color-mix(in srgb, var(--c) 9%, transparent); font-variant-numeric: tabular-nums; }
   .plan dd { color: var(--muted); }
-  .more { display: inline-block; margin-top: 1.1rem; font-size: .95rem; color: var(--muted); }
+  .more { display: inline-block; margin-top: 1.35rem; font-size: .95rem; font-weight: 600; color: var(--c); text-underline-offset: 3px; }
 
   .admit { font: 400 1.6rem/1 var(--serif); color: var(--c); }
   .stub dl { font-size: .9rem; display: grid; gap: .55rem; }
@@ -157,10 +162,11 @@
 
 
   /* ---------- Send ---------- */
-  .send { padding: 2rem 0 5rem; }
+  .send { padding: 1.5rem 0 7rem; display: grid; justify-items: center; }
   .card {
-    max-width: 40rem;
-    padding: 2.25rem;
+    width: 100%; max-width: 40rem;
+    padding: 2.5rem;
+    text-align: left;
     border-radius: 1.4rem;
     background: rgba(255,255,255,.07);
     border: 1px solid rgba(255,255,255,.14);
@@ -209,12 +215,38 @@
   /* ---------- Music ---------- */
   .music {
     position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 10;
-    display: flex; align-items: center; gap: .6rem;
-    padding: .7rem 1.1rem .7rem .8rem; border-radius: 999px;
-    border: 1px solid rgba(255,255,255,.2);
-    background: rgba(18,20,51,.75); backdrop-filter: blur(8px);
-    color: #fff; font: 600 .9rem/1 var(--sans); cursor: pointer;
+    display: flex; align-items: center; gap: .65rem;
+    height: 3.25rem; padding: 0 1.35rem 0 1.05rem; border-radius: 999px;
+    border: 0; background: var(--glow); color: var(--ink);
+    font: 700 1rem/1 var(--sans); cursor: pointer;
+    box-shadow: 0 10px 30px rgba(245,184,61,.35), 0 2px 8px rgba(0,0,0,.25);
+    transition: transform .15s ease;
   }
+  .music:hover { transform: translateY(-2px); }
+  .music:not(.played)::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    box-shadow: 0 0 0 0 rgba(245,184,61,.6);
+    animation: ping 2s ease-out infinite;
+  }
+  @keyframes ping { to { box-shadow: 0 0 0 16px rgba(245,184,61,0); } }
+  .music .play-ico { width: 0; height: 0; border-style: solid; border-width: .45rem 0 .45rem .72rem; border-color: transparent transparent transparent var(--ink); }
+  .music.playing .play-ico { display: none; }
+  .music:not(.playing) .bars { display: none; }
+  .bars i { background: var(--ink) !important; }
+  .hero-play {
+    display: inline-flex; align-items: center; gap: .6rem;
+    margin-top: 1.75rem; padding: .7rem 1.2rem .7rem .75rem;
+    border: 1px solid rgba(255,255,255,.35); border-radius: 999px;
+    background: rgba(255,255,255,.1); color: #fff; cursor: pointer;
+    font: 600 .95rem/1 var(--sans); backdrop-filter: blur(6px);
+  }
+  .hero-play span.dot {
+    width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--glow);
+    display: inline-grid; place-items: center;
+  }
+  .hero-play span.dot::after { content: ""; margin-left: 2px; border-style: solid; border-width: .32rem 0 .32rem .5rem; border-color: transparent transparent transparent var(--ink); }
+  .hero-play.playing span.dot::after { margin: 0; width: .55rem; height: .6rem; border: 0; border-left: 3px solid var(--ink); border-right: 3px solid var(--ink); }
+  .hero-play:hover { background: rgba(255,255,255,.18); }
   .music[hidden] { display: none; }
   .bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 1rem; }
   .bars i { width: 3px; height: 30%; background: var(--glow); border-radius: 2px; }
@@ -240,10 +272,15 @@
       background-size: 12px 2px; background-repeat: repeat-x;
       padding: 1.5rem;
     }
-    .stub dl { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem 1rem; }
+    .stub dl { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem 1rem; }
     .ticket.picked .stub { transform: translateY(.6rem) rotate(-1.5deg); }
     .slot { font-size: .75rem; padding: 0 .55rem; }
     .slot small { display: none; }
+    .slot .full { display: none; }
+    .slot .short { display: inline; }
+    .evening { padding: 1.25rem 1rem 1.1rem; }
+    .evening h2 { font-size: 1.15rem; margin-bottom: .5rem; }
+    .ruler-key { position: static; margin-top: 1.9rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -260,6 +297,7 @@
     <p class="kicker">You, me, and a Wednesday night</p>
     <h1><span>Wednesday,</span><span>October 28</span></h1>
     <p class="lede">I have three ideas for Wednesday night. You pick the one that sounds best, and I'll take care of the rest.</p>
+    <button class="hero-play" id="hero-play" type="button"><span class="dot" aria-hidden="true"></span><span id="hero-play-label">Press play before you scroll</span></button>
 
     <section class="evening" aria-label="When each option happens">
       <h2>How the evening could go</h2>
@@ -271,7 +309,7 @@
 
 <form id="pick" novalidate>
 <main class="wrap">
-  <p class="intro">Each one comes with something built in to talk about. Read them over, tap the one that sounds most like you, then submit it at the bottom.</p>
+  <p class="intro">Pick one below, then submit it at the bottom.</p>
 
   <!-- Comedy -->
   <article class="ticket comedy" id="comedy" data-name="the Fresh Goofs comedy show" data-dinner="Moona">
@@ -280,21 +318,20 @@
       <span class="tag">Stand-up in Somerville</span>
       <h3>Fresh Goofs</h3>
       <p class="venue">Goofs Comedy Club, 432 McGrath Highway</p>
-      <p class="desc">An indie club with fewer than a hundred seats and a lineup of Boston comics working out new material. Some of it will kill and some of it won't, and both are fun to pick apart over a drink after. Laughing at the same jokes beats an hour of interview questions.</p>
+      <p class="desc">A comedy show at a small club in Somerville.</p>
       <dl class="plan">
-        <dt>6:15</dt><dd>I meet you at your place in the Port.</dd>
-        <dt>6:30</dt><dd>If you're up for dinner, we walk to <a href="https://moonarestaurant.com/" target="_blank" rel="noopener">Moona</a> on Main Street in Central Square: Eastern Mediterranean plates to share, like hummus, mezze, kefta and falafel.</dd>
-        <dt>7:45</dt><dd>Short ride over to Goofs. Grab drinks and a table near the stage.</dd>
-        <dt>8:00</dt><dd>Show starts: a run of comics, each doing a short set. We're out by 9:30.</dd>
-      </dl>
+          <dt>6:15</dt><dd>Meet at your place in the Port.</dd>
+          <dt>6:30</dt><dd>Dinner at <a href="https://moonarestaurant.com/" target="_blank" rel="noopener">Moona</a> in Central Square ('cause you love spicy food).</dd>
+          <dt>7:45</dt><dd>Ride over to Goofs.</dd>
+          <dt>8:00</dt><dd>Show starts. Out by 9:30.</dd>
+        </dl>
       <a class="more" href="https://goofscomedy.com/p/show/2026-10-28-2000" target="_blank" rel="noopener">See the show page</a>
     </div>
     <div class="stub">
       <span class="admit">Admit two</span>
       <dl>
         <div><dt>Starts</dt><dd>8:00 pm, doors at 7:30</dd></div>
-        <div><dt>Dinner</dt><dd>Moona, Central Square</dd></div>
-        <div><dt>Good to know</dt><dd>21+, no drink minimum</dd></div>
+        <div><dt>Dinner</dt><dd>Moona</dd></div>
       </dl>
       <label class="choose"><input type="radio" name="choice" value="Fresh Goofs comedy show (dinner at Moona in Central Square, 8 pm show at Goofs Comedy Club, Somerville)"><span class="dot"></span><span class="lbl">Pick this</span></label>
     </div>
@@ -307,20 +344,18 @@
       <span class="tag">Wine class in Kenmore Square</span>
       <h3>The Wines of Rioja</h3>
       <p class="venue">Vinodivino, Kenmore Square</p>
-      <p class="desc">A small tasting class on Spain's most famous wine region, capped at twelve people. We'd taste Tempranillo blends and the white Viura, put an old-school oak-aged bottle next to a fresher modern one, and finally learn what Crianza, Reserva and Gran Reserva mean on a label. Then, if you're hungry, hand rolls are a short walk away.</p>
+      <p class="desc">A small Spanish wine tasting, all about Rioja.</p>
       <dl class="plan">
-        <dt>6:00</dt><dd>Class starts. A small table, pours as we go.</dd>
-        <dt>During</dt><dd>How the French shaped Rioja in the late 1800s, the four grapes (Tempranillo, Garnacha, Graciano, Viura), and what the labels really mean. Then traditional and modern, side by side.</dd>
-        <dt>8:00</dt><dd>Class ends. If you're up for dinner, it's a short walk to <a href="https://matsunori.com/" target="_blank" rel="noopener">Matsunori</a> in Audubon Circle for hand rolls at the counter, handed over one at a time with more fish than rice. It's walk-ins only, so we'd head straight there.</dd>
-      </dl>
+          <dt>6:00</dt><dd>Class starts: reds and whites, old-school and modern.</dd>
+          <dt>8:15</dt><dd>Hand rolls at <a href="https://matsunori.com/" target="_blank" rel="noopener">Matsunori</a>, a short walk away.</dd>
+        </dl>
       <a class="more" href="https://vinodivino.com/products/passport-series-spain-the-wines-of-rioja-wine-class" target="_blank" rel="noopener">See the class page</a>
     </div>
     <div class="stub">
       <span class="admit">Admit two</span>
       <dl>
         <div><dt>Starts</dt><dd>6:00 pm</dd></div>
-        <div><dt>Dinner</dt><dd>Matsunori, if you want</dd></div>
-        <div><dt>Good to know</dt><dd>12 guests max</dd></div>
+        <div><dt>Dinner</dt><dd>Matsunori</dd></div>
       </dl>
       <label class="choose"><input type="radio" name="choice" value="Rioja wine class (6 to 8 pm, Vinodivino, Kenmore Square)"><span class="dot"></span><span class="lbl">Pick this</span></label>
     </div>
@@ -333,20 +368,19 @@
       <span class="tag">A lecture in a bookstore, Back Bay</span>
       <h3>Three Chords and the Truth</h3>
       <p class="venue">Lectures on Tap at Trident Booksellers &amp; Cafe, 338 Newbury Street</p>
-      <p class="desc">A professor and a microphone in one of Boston's favorite bookstores. Delvyn Case has taught popular music history at Wheaton College for 25 years. He traces the blues from the Jim Crow South to the jazz, country, gospel and rock 'n' roll it gave birth to, and on into punk, metal and hip-hop. Part night class, part bookstore date.</p>
+      <p class="desc">A talk on the history of the blues, in a bookstore.</p>
       <dl class="plan">
-        <dt>6:30</dt><dd>Browse the shelves at Trident, grab a drink and find two seats with a view of the mic.</dd>
-        <dt>6:45</dt><dd>The talk: stories, records and how three chords became everything.</dd>
-        <dt>8:15</dt><dd>If you're hungry, a short walk to <a href="https://www.lolitamexican.com/location/lolita-back-bay/" target="_blank" rel="noopener">Lolita</a> on Dartmouth Street for Mexican food, tequila and an argument about our favorite songs. We'd wrap up around 9:30.</dd>
-      </dl>
+          <dt>6:30</dt><dd>Browse the shelves at Trident ('cause you love reading).</dd>
+          <dt>6:45</dt><dd>The talk with Prof. Delvyn Case.</dd>
+          <dt>8:15</dt><dd>Dinner at <a href="https://www.lolitamexican.com/location/lolita-back-bay/" target="_blank" rel="noopener">Lolita</a>, a short walk away.</dd>
+        </dl>
       <a class="more" href="https://www.eventbrite.com/e/lectures-on-tap-three-chords-and-the-truth-the-story-of-the-blues-tickets-2001267909189" target="_blank" rel="noopener">See the lecture page</a>
     </div>
     <div class="stub">
       <span class="admit">Admit two</span>
       <dl>
         <div><dt>Starts</dt><dd>6:45 pm</dd></div>
-        <div><dt>Dinner</dt><dd>8:15 pm at Lolita</dd></div>
-        <div><dt>Where</dt><dd>Trident Booksellers, Newbury St</dd></div>
+        <div><dt>Dinner</dt><dd>Lolita</dd></div>
       </dl>
       <label class="choose"><input type="radio" name="choice" value="Blues lecture (6:45 to 8 pm, Trident Booksellers, 338 Newbury St)"><span class="dot"></span><span class="lbl">Pick this</span></label>
     </div>
@@ -372,7 +406,7 @@
 </form>
 
 <button class="music" id="music" type="button" aria-pressed="false" hidden>
-  <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="music-label">Play music</span>
+  <span class="play-ico" aria-hidden="true"></span><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="music-label">Play music</span>
 </button>
 <audio id="song" src="music/song.mp3" loop preload="none"></audio>
 
@@ -387,22 +421,34 @@
     ruler.appendChild(t);
   }
   [
-    { id: 'rioja',  from: 18,    to: 20,    top: 2.7, label: 'Rioja wine class', t: '6–8' },
+    { id: 'rioja',  from: 18,    to: 20,    top: 2.7, label: 'Rioja wine class', short: 'Wine class', t: '6–8' },
     { id: 'rioja',  from: 20.25, to: 21.5,  top: 2.7, label: 'Matsunori', dinner: true },
-    { id: 'blues',  from: 18.5,  to: 20,    top: 5.2, label: 'Lecture at bookstore', t: '6:30–8' },
+    { id: 'blues',  from: 18.5,  to: 20,    top: 5.2, label: 'Lecture at bookstore', short: 'Lecture', t: '6:30–8' },
     { id: 'blues',  from: 20.25, to: 21.5,  top: 5.2, label: 'Lolita', dinner: true },
     { id: 'comedy', from: 18.5,  to: 19.75, top: 0.2, label: 'Moona', dinner: true },
-    { id: 'comedy', from: 20,    to: 21.5,  top: 0.2, label: 'Comedy show',      t: '8–9:30' },
+    { id: 'comedy', from: 20,    to: 21.5,  top: 0.2, label: 'Comedy show', short: 'Comedy', t: '8–9:30' },
   ].forEach((s, i) => {
     const a = document.createElement('a');
     a.className = 'slot'; a.href = '#' + s.id;
     a.style.cssText = `left:${pct(s.from)};width:calc(${pct(s.to)} - ${pct(s.from)});top:${s.top}rem;background:var(--${s.id});animation-delay:${200 + i * 160}ms`;
     if (s.dinner) a.classList.add('dinner');
-    a.innerHTML = s.t ? `${s.label} <small>${s.t}</small>` : `${s.label} <small>dinner</small>`;
+    const name = s.short ? `<span class="full">${s.label}</span><span class="short">${s.short}</span>` : s.label;
+    a.innerHTML = s.t ? `${name} <small>${s.t}</small>` : `${name} <small>dinner</small>`;
     ruler.appendChild(a);
   });
 
   requestAnimationFrame(() => document.body.classList.add('ready'));
+
+  // The hero prompt drives the same music button (music.js owns playback)
+  const heroPlay = document.getElementById('hero-play');
+  heroPlay.addEventListener('click', () => document.getElementById('music').click());
+  new MutationObserver(() => {
+    const m = document.getElementById('music'); if (!m) return;
+    const on = m.classList.contains('playing');
+    if (on) m.classList.add('played');
+    heroPlay.classList.toggle('playing', on);
+    document.getElementById('hero-play-label').textContent = on ? 'Pause the music' : 'Press play before you scroll';
+  }).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class'] });
 
   // ---------- Picking a ticket ----------
   const updateSubmit = () => {
