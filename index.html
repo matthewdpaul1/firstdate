@@ -250,6 +250,8 @@
     html { scroll-behavior: auto; }
   }
 </style>
+<link rel="stylesheet" href="music.css">
+<script src="music.js" defer></script>
 </head>
 <body>
 
@@ -422,24 +424,6 @@
     document.getElementById('dinner-q').disabled = false;
     updateSubmit();
   }));
-
-  // ---------- Music: only shown once music/song.mp3 exists; browsers need a tap to start audio ----------
-  const music = document.getElementById('music');
-  const song = document.getElementById('song');
-  const musicLabel = document.getElementById('music-label');
-  fetch(song.getAttribute('src'), { method: 'HEAD' }).then(r => { if (r.ok) music.hidden = false; }).catch(() => {});
-  song.volume = 0.45;
-  music.addEventListener('click', async () => {
-    if (song.paused) {
-      try { await song.play(); } catch { return; }
-      music.classList.add('playing'); music.setAttribute('aria-pressed', 'true'); musicLabel.textContent = 'Pause music';
-    } else {
-      song.pause();
-      music.classList.remove('playing'); music.setAttribute('aria-pressed', 'false'); musicLabel.textContent = 'Play music';
-    }
-  });
-
-  document.querySelectorAll('input[name="dinner"]').forEach(r => r.addEventListener('change', updateSubmit));
 
   // ---------- Send: emails the pick via FormSubmit ----------
   const form = document.getElementById('pick');
