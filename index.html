@@ -167,6 +167,21 @@
   }
   .field textarea { min-height: 6rem; resize: vertical; }
   .field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,.45); }
+  .dinner-q { margin-top: 1.5rem; border: 0; transition: opacity .2s ease; }
+  .dinner-q:disabled { opacity: .4; }
+  .dinner-q legend { font-weight: 600; font-size: .95rem; margin-bottom: .6rem; }
+  .pills { display: flex; flex-wrap: wrap; gap: .6rem; }
+  .pill { position: relative; cursor: pointer; }
+  .pill input { position: absolute; opacity: 0; }
+  .pill span {
+    display: inline-block; padding: .7rem 1.1rem; border-radius: 999px;
+    border: 1.5px solid rgba(255,255,255,.3); font-weight: 500;
+  }
+  .pill input:checked + span { background: var(--glow); border-color: var(--glow); color: var(--ink); }
+  .pill input:checked + span b { color: var(--ink); }
+  .pill b { font-weight: 700; color: var(--glow); }
+  .pill input:focus-visible + span { outline: 3px solid var(--glow); outline-offset: 3px; }
+  .dinner-q:disabled .pill { cursor: not-allowed; }
   .submit {
     margin-top: 1.5rem; appearance: none; border: 0; cursor: pointer;
     padding: .95rem 1.6rem; border-radius: 999px;
@@ -242,7 +257,7 @@
   <p class="intro">Each one comes with something built in to talk about. Read them over, tap the one that sounds most like you, then submit it at the bottom.</p>
 
   <!-- Comedy -->
-  <article class="ticket comedy" id="comedy" data-name="Dinner at Moona, then the Fresh Goofs comedy show">
+  <article class="ticket comedy" id="comedy" data-name="the Fresh Goofs comedy show" data-dinner="Moona">
     <div class="art"><img src="img/comedy.jpg" alt="An audience laughing at Goofs Comedy Club" width="1800" height="922"></div>
     <div class="body">
       <span class="tag">Stand-up in Somerville</span>
@@ -263,12 +278,12 @@
         <div><dt>Seating</dt><dd>Tables with a full view of the stage</dd></div>
         <div><dt>Good to know</dt><dd>21+, no drink minimum</dd></div>
       </dl>
-      <label class="choose"><input type="radio" name="choice" value="Dinner at Moona, then Fresh Goofs comedy show (8 pm, Goofs Comedy Club, Somerville)"><span class="dot"></span><span class="lbl">Pick this</span></label>
+      <label class="choose"><input type="radio" name="choice" value="Fresh Goofs comedy show (8 pm, Goofs Comedy Club, Somerville)"><span class="dot"></span><span class="lbl">Pick this</span></label>
     </div>
   </article>
 
   <!-- Rioja -->
-  <article class="ticket rioja" id="rioja" data-name="Rioja wine class, then hand rolls at Matsunori">
+  <article class="ticket rioja" id="rioja" data-name="the Rioja wine class" data-dinner="Matsunori">
     <div class="art"><img src="img/rioja.jpg" alt="Vineyards beneath a stone church in Rioja, Spain" width="1080" height="405"></div>
     <div class="body">
       <span class="tag">Wine class in Kenmore Square</span>
@@ -289,12 +304,12 @@
         <div><dt>Length</dt><dd>2 hours</dd></div>
         <div><dt>Good to know</dt><dd>12 guests max, reds and whites</dd></div>
       </dl>
-      <label class="choose"><input type="radio" name="choice" value="Rioja wine class (6 to 8 pm, Vinodivino, Kenmore Square), then hand rolls at Matsunori"><span class="dot"></span><span class="lbl">Pick this</span></label>
+      <label class="choose"><input type="radio" name="choice" value="Rioja wine class (6 to 8 pm, Vinodivino, Kenmore Square)"><span class="dot"></span><span class="lbl">Pick this</span></label>
     </div>
   </article>
 
   <!-- Blues -->
-  <article class="ticket blues" id="blues" data-name="Blues lecture at Trident, then Lolita">
+  <article class="ticket blues" id="blues" data-name="the blues lecture at Trident" data-dinner="Lolita">
     <div class="art"><img src="img/blues.jpg" alt="Couples dancing in a juke joint in Clarksdale, Mississippi, 1939. Photo by Marion Post Wolcott, Library of Congress" width="896" height="672"></div>
     <div class="body">
       <span class="tag">A lecture in a bookstore, Back Bay</span>
@@ -315,15 +330,22 @@
         <div><dt>Speaker</dt><dd>Prof. Delvyn Case</dd></div>
         <div><dt>Where</dt><dd>Trident Booksellers, Newbury St</dd></div>
       </dl>
-      <label class="choose"><input type="radio" name="choice" value="Blues lecture (6:30 pm, Trident Booksellers, Newbury St), then Lolita"><span class="dot"></span><span class="lbl">Pick this</span></label>
+      <label class="choose"><input type="radio" name="choice" value="Blues lecture (6:30 pm, Trident Booksellers, Newbury St)"><span class="dot"></span><span class="lbl">Pick this</span></label>
     </div>
   </article>
 </main>
 
 <section class="send wrap" aria-labelledby="send-title">
   <div class="card" id="card">
-    <h2 id="send-title">Submit your pick</h2>
+    <h2 id="send-title">Choose your activity</h2>
     <p class="status" id="status">Tap <strong>Pick this</strong> on one of the tickets above.</p>
+    <fieldset class="dinner-q" id="dinner-q" disabled>
+      <legend>Do you want to do dinner as well?</legend>
+      <div class="pills">
+        <label class="pill"><input type="radio" name="dinner" value="yes"><span>Yes, dinner at <b id="dinner-spot">the spot</b></span></label>
+        <label class="pill"><input type="radio" name="dinner" value="no"><span>Just the activity</span></label>
+      </div>
+    </fieldset>
     <label class="field"><span>Anything else I should know? (optional)</span><textarea name="note" placeholder="Running late from work, don't love wine, want to grab food first..."></textarea></label>
     <button class="submit" type="submit" id="submit" disabled>Submit my pick</button>
     <p class="error" id="error" hidden></p>
@@ -365,6 +387,9 @@
   requestAnimationFrame(() => document.body.classList.add('ready'));
 
   // ---------- Picking a ticket ----------
+  const updateSubmit = () => {
+    submit.disabled = !(form.querySelector('input[name="choice"]:checked') && form.querySelector('input[name="dinner"]:checked'));
+  };
   const tickets = [...document.querySelectorAll('.ticket')];
   const status = document.getElementById('status');
   const submit = document.getElementById('submit');
@@ -375,8 +400,11 @@
       t.classList.toggle('dim', !on);
       t.querySelector('.lbl').textContent = on ? 'Picked' : 'Pick this';
     });
-    status.innerHTML = `Your pick: <strong>${r.closest('.ticket').dataset.name}</strong>`;
-    submit.disabled = false;
+    const t = r.closest('.ticket'), n = t.dataset.name;
+    status.innerHTML = `Your pick: <strong>${n.charAt(0).toUpperCase() + n.slice(1)}</strong>`;
+    document.getElementById('dinner-spot').textContent = t.dataset.dinner;
+    document.getElementById('dinner-q').disabled = false;
+    updateSubmit();
   }));
 
   // ---------- Music: only shown once music/song.mp3 exists; browsers need a tap to start audio ----------
@@ -395,29 +423,35 @@
     }
   });
 
+  document.querySelectorAll('input[name="dinner"]').forEach(r => r.addEventListener('change', updateSubmit));
+
   // ---------- Send: emails the pick via FormSubmit ----------
   const form = document.getElementById('pick');
   const error = document.getElementById('error');
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(form));
-    if (!data.choice) return;
+    if (!data.choice || !data.dinner) return;
+    const ticket = form.querySelector('input[name="choice"]:checked').closest('.ticket');
+    const spot = ticket.dataset.dinner, wantsDinner = data.dinner === 'yes';
     submit.disabled = true; submit.textContent = 'Sending...'; error.hidden = true;
     try {
       const res = await fetch('https://formsubmit.co/ajax/matthewdpaul1@gmail.com', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          _subject: `Wednesday pick: ${data.choice.split(' (')[0]}`,
+          _subject: `Wednesday pick: ${data.choice.split(' (')[0]}${wantsDinner ? ' + dinner at ' + spot : ''}`,
           _template: 'table',
           _captcha: 'false',
-          Pick: data.choice,
+          Activity: data.choice,
+          Dinner: wantsDinner ? `Yes, ${spot}` : 'No, just the activity',
           Note: data.note || '(no note)',
         }),
       });
       const out = await res.json().catch(() => ({}));
       if (!res.ok || String(out.success) !== 'true') throw new Error(out.message || 'Send failed');
-      const pick = form.querySelector('input[name="choice"]:checked').closest('.ticket').dataset.name;
+      const n = ticket.dataset.name;
+      const pick = n.charAt(0).toUpperCase() + n.slice(1) + (wantsDinner ? ` and dinner at ${spot}` : '');
       document.getElementById('card').innerHTML =
         `<div class="done"><h2>Sent. It's a date.</h2><p>${pick}, Wednesday the 28th. I'll grab the tickets and text you the details.</p></div>`;
     } catch (err) {
