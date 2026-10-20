@@ -34,7 +34,7 @@
     font: 400 1.0625rem/1.6 var(--sans);
     /* the evening gets darker as you scroll down the page */
     background: linear-gradient(to bottom,
-      #E9A23B 0, #C9577A 14rem, var(--haze) 30rem, var(--dusk) 52rem, var(--night) 80rem) var(--night);
+      #D9718F 0, #A84E8C 16rem, var(--haze) 30rem, var(--dusk) 52rem, var(--night) 80rem) var(--night);
   }
   img { display: block; max-width: 100%; }
   a { color: inherit; }
@@ -43,21 +43,6 @@
 
   /* ---------- Hero ---------- */
   header { position: relative; padding: clamp(4rem, 10vw, 7.5rem) 0 3rem; overflow: hidden; }
-  .sun {
-    position: absolute; right: 8%; top: 11rem;
-    width: clamp(9rem, 22vw, 17rem); aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 40%, #FFE3A3, #F5B83D 55%, #E9873B);
-    box-shadow: 0 0 120px 40px rgba(245,184,61,.35);
-    animation: set 2.4s cubic-bezier(.3,.6,.2,1) both;
-  }
-  @keyframes set { from { transform: translateY(-3.5rem); } to { transform: none; } }
-  .horizon {
-    position: absolute; left: 0; right: 0; top: calc(11rem + clamp(4.5rem, 11vw, 8.5rem));
-    height: 60rem;
-    background: linear-gradient(to bottom, rgba(18,20,51,.0), rgba(45,36,102,.55) 6rem, transparent 40rem);
-    pointer-events: none;
-  }
   .hero-text { position: relative; }
   .kicker { font-weight: 600; font-size: 1.05rem; color: rgba(28,26,51,.8); }
   h1 {
@@ -76,8 +61,6 @@
   .ruler { position: relative; height: 9rem; }
   .tick { position: absolute; top: 0; bottom: 1.75rem; border-left: 1px dashed rgba(255,255,255,.28); }
   .tick b { position: absolute; bottom: -1.75rem; left: 0; transform: translateX(-50%); font: 500 .85rem/1 var(--sans); opacity: .8; white-space: nowrap; }
-  .tick.sunset { border-left: 2px solid var(--glow); }
-  .tick.sunset b { color: var(--glow); opacity: 1; }
   .slot {
     position: absolute; height: 2.1rem;
     display: flex; align-items: center; gap: .5rem;
@@ -157,12 +140,6 @@
   .ticket.dim { opacity: .55; }
   .ticket.dim:hover { opacity: .85; }
 
-  .chords { display: grid; place-items: center; background: var(--blues) !important; color: #fff; min-height: 14rem; }
-  .chords::before {
-    content: ""; position: absolute; inset: 20% 0;
-    background: repeating-linear-gradient(to bottom, rgba(255,255,255,.3) 0 1px, transparent 1px 20%);
-  }
-  .chords p { position: relative; display: flex; gap: .3em; font: 400 clamp(3.4rem, 7vw, 5rem)/1 var(--serif); }
 
   /* ---------- Send ---------- */
   .send { padding: 2rem 0 5rem; }
@@ -199,10 +176,26 @@
   .done p { margin-top: .75rem; font-size: 1.15rem; }
   .also { margin-top: 1.5rem; font-size: .95rem; opacity: .75; }
 
+  /* ---------- Music ---------- */
+  .music {
+    position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 10;
+    display: flex; align-items: center; gap: .6rem;
+    padding: .7rem 1.1rem .7rem .8rem; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(18,20,51,.75); backdrop-filter: blur(8px);
+    color: #fff; font: 600 .9rem/1 var(--sans); cursor: pointer;
+  }
+  .music[hidden] { display: none; }
+  .bars { display: inline-flex; gap: 2px; align-items: flex-end; height: 1rem; }
+  .bars i { width: 3px; height: 30%; background: var(--glow); border-radius: 2px; }
+  .music.playing .bars i { animation: eq .9s ease-in-out infinite alternate; }
+  .music.playing .bars i:nth-child(2) { animation-delay: -.3s; }
+  .music.playing .bars i:nth-child(3) { animation-delay: -.6s; }
+  @keyframes eq { from { height: 25%; } to { height: 100%; } }
+
   @media (max-width: 900px) {
     .ticket { grid-template-columns: 1fr; }
     .ticket .art { border-radius: 1.1rem 1.1rem 0 0; aspect-ratio: 16 / 9; }
-    .chords { min-height: 0; }
     .ticket .body { padding: 1.6rem 1.5rem; }
     .stub {
       border-radius: 0 0 1.1rem 1.1rem;
@@ -218,9 +211,6 @@
     .ticket.picked .stub { transform: translateY(.6rem) rotate(-1.5deg); }
     .slot { font-size: .75rem; padding: 0 .55rem; }
     .slot small { display: none; }
-    .sun { top: 1.25rem; right: -1.5rem; width: 7.5rem; }
-    .horizon { display: none; }
-    .tick.sunset b { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -231,12 +221,10 @@
 <body>
 
 <header>
-  <div class="sun" aria-hidden="true"></div>
-  <div class="horizon" aria-hidden="true"></div>
   <div class="wrap hero-text">
     <p class="kicker">You, me, and a Wednesday night</p>
     <h1><span>Wednesday,</span><span>October 28</span></h1>
-    <p class="lede">The sun sets around 5:40. After that I have three ideas, and you get to pick the one we do.</p>
+    <p class="lede">I have three ideas for Wednesday night. You pick the one that sounds best, and I'll take care of the rest.</p>
 
     <section class="evening" aria-label="When each option happens">
       <h2>How the evening could go</h2>
@@ -247,7 +235,7 @@
 
 <form id="pick" novalidate>
 <main class="wrap">
-  <p class="intro">Each one comes with something built in to talk about. Read them over, tap the one that sounds most like you, then send it to me at the bottom.</p>
+  <p class="intro">Each one comes with something built in to talk about. Read them over, tap the one that sounds most like you, then submit it at the bottom.</p>
 
   <!-- Comedy -->
   <article class="ticket comedy" id="comedy" data-name="Fresh Goofs comedy show">
@@ -303,7 +291,7 @@
 
   <!-- Blues -->
   <article class="ticket blues" id="blues" data-name="Story of the Blues lecture">
-    <div class="art chords" aria-hidden="true"><p><span>I</span><span>IV</span><span>V</span></p></div>
+    <div class="art"><img src="img/blues.jpg" alt="Couples dancing in a juke joint in Clarksdale, Mississippi, 1939. Photo by Marion Post Wolcott, Library of Congress" width="896" height="672"></div>
     <div class="body">
       <span class="tag">A lecture in a bar, Back Bay</span>
       <h3>Three Chords and the Truth</h3>
@@ -330,25 +318,26 @@
 
 <section class="send wrap" aria-labelledby="send-title">
   <div class="card" id="card">
-    <h2 id="send-title">Send me your pick</h2>
+    <h2 id="send-title">Submit your pick</h2>
     <p class="status" id="status">Tap <strong>Pick this</strong> on one of the tickets above.</p>
-    <label class="field"><span>Your name</span><input name="name" autocomplete="given-name" placeholder="So I know it's you"></label>
-    <label class="field"><span>Anything I should know?</span><textarea name="note" placeholder="Running late from work, don't love wine, want to grab food first..."></textarea></label>
-    <button class="submit" type="submit" id="submit" disabled>Send my pick</button>
+    <label class="field"><span>Anything else I should know? (optional)</span><textarea name="note" placeholder="Running late from work, don't love wine, want to grab food first..."></textarea></label>
+    <button class="submit" type="submit" id="submit" disabled>Submit my pick</button>
     <p class="error" id="error" hidden></p>
     <p class="also">Can't choose? Wine lets out at 8 and the comedy starts at 8 across the river. It's tight, but we could leave before the last pour. Say so in the note.</p>
   </div>
 </section>
 </form>
 
+<button class="music" id="music" type="button" aria-pressed="false" hidden>
+  <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="music-label">Play music</span>
+</button>
+<audio id="song" src="music/song.mp3" loop preload="none"></audio>
+
 <script>
-  // ---------- Evening ruler: 5:30 to 10 pm, every option at its real time ----------
-  const START = 17.5, END = 22;
+  // ---------- Evening ruler: 5:45 to 10 pm, every option at its real time ----------
+  const START = 17.75, END = 22;
   const pct = h => ((h - START) / (END - START) * 100).toFixed(3) + '%';
   const ruler = document.getElementById('ruler');
-  const sunset = document.createElement('div');
-  sunset.className = 'tick sunset'; sunset.style.left = pct(17.67); sunset.innerHTML = '<b>Sunset</b>';
-  ruler.appendChild(sunset);
   for (let h = 18; h <= 22; h++) {
     const t = document.createElement('div');
     t.className = 'tick'; t.style.left = pct(h); t.innerHTML = `<b>${h - 12} pm</b>`;
@@ -383,6 +372,22 @@
     submit.disabled = false;
   }));
 
+  // ---------- Music: only shown once music/song.mp3 exists; browsers need a tap to start audio ----------
+  const music = document.getElementById('music');
+  const song = document.getElementById('song');
+  const musicLabel = document.getElementById('music-label');
+  fetch(song.getAttribute('src'), { method: 'HEAD' }).then(r => { if (r.ok) music.hidden = false; }).catch(() => {});
+  song.volume = 0.45;
+  music.addEventListener('click', async () => {
+    if (song.paused) {
+      try { await song.play(); } catch { return; }
+      music.classList.add('playing'); music.setAttribute('aria-pressed', 'true'); musicLabel.textContent = 'Pause music';
+    } else {
+      song.pause();
+      music.classList.remove('playing'); music.setAttribute('aria-pressed', 'false'); musicLabel.textContent = 'Play music';
+    }
+  });
+
   // ---------- Send: emails the pick via FormSubmit ----------
   const form = document.getElementById('pick');
   const error = document.getElementById('error');
@@ -400,7 +405,6 @@
           _template: 'table',
           _captcha: 'false',
           Pick: data.choice,
-          Name: data.name || '(no name)',
           Note: data.note || '(no note)',
         }),
       });
@@ -412,7 +416,7 @@
     } catch (err) {
       error.textContent = "That didn't go through. Check your connection and try again, or just text me your pick.";
       error.hidden = false;
-      submit.disabled = false; submit.textContent = 'Send my pick';
+      submit.disabled = false; submit.textContent = 'Submit my pick';
     }
   });
 </script>
