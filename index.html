@@ -59,6 +59,8 @@
   .evening { position: relative; margin-top: 4rem; }
   .evening h2 { font: 600 1rem/1 var(--sans); opacity: .85; margin-bottom: 1.25rem; }
   .ruler { position: relative; height: 9rem; }
+  .ruler-key { margin-top: 2.6rem; font-size: .85rem; opacity: .8; }
+  .ruler-key i { display: inline-block; width: 1.4rem; height: .7rem; margin-right: .4rem; vertical-align: -1px; border-radius: .35rem; border: 1.5px dashed var(--glow); }
   .tick { position: absolute; top: 0; bottom: 1.75rem; border-left: 1px dashed rgba(255,255,255,.28); }
   .tick b { position: absolute; bottom: -1.75rem; left: 0; transform: translateX(-50%); font: 500 .85rem/1 var(--sans); opacity: .8; white-space: nowrap; }
   .slot {
@@ -72,6 +74,7 @@
   }
   .ready .slot { animation: draw .9s cubic-bezier(.2,.7,.2,1) backwards; }
   .slot small { font-weight: 400; opacity: .85; }
+  .slot.dinner { background: rgba(255,255,255,.12) !important; border: 1.5px dashed var(--glow); box-shadow: none; }
   @keyframes draw { from { transform: scaleX(0); opacity: 0; } to { transform: none; opacity: 1; } }
 
   /* ---------- Tickets ---------- */
@@ -229,6 +232,7 @@
     <section class="evening" aria-label="When each option happens">
       <h2>How the evening could go</h2>
       <div class="ruler" id="ruler"></div>
+      <p class="ruler-key"><i></i>Dinner</p>
     </section>
   </div>
 </header>
@@ -238,7 +242,7 @@
   <p class="intro">Each one comes with something built in to talk about. Read them over, tap the one that sounds most like you, then submit it at the bottom.</p>
 
   <!-- Comedy -->
-  <article class="ticket comedy" id="comedy" data-name="Fresh Goofs comedy show">
+  <article class="ticket comedy" id="comedy" data-name="Dinner at Moona, then the Fresh Goofs comedy show">
     <div class="art"><img src="img/comedy.jpg" alt="An audience laughing at Goofs Comedy Club" width="1800" height="922"></div>
     <div class="body">
       <span class="tag">Stand-up in Somerville</span>
@@ -246,9 +250,9 @@
       <p class="venue">Goofs Comedy Club, 432 McGrath Highway</p>
       <p class="desc">An indie club with fewer than a hundred seats and a lineup of Boston comics working out new material. Some of it will kill and some of it won't, and both are fun to pick apart over a drink after. Laughing at the same jokes beats an hour of interview questions.</p>
       <dl class="plan">
-        <dt>7:30</dt><dd>Doors open. Grab drinks and a table near the stage.</dd>
+        <dt>6:15</dt><dd>Dinner at <a href="https://moonarestaurant.com/" target="_blank" rel="noopener">Moona</a> in Cambridge: Eastern Mediterranean small plates, hummus and mezze to share.</dd>
+        <dt>7:45</dt><dd>Short ride over to Goofs. Grab drinks and a table near the stage.</dd>
         <dt>8:00</dt><dd>Show starts: a run of comics, each doing a short set.</dd>
-        <dt>9:30</dt><dd>Out the door, with plenty of night left for a nightcap in Somerville.</dd>
       </dl>
       <a class="more" href="https://goofscomedy.com/p/show/2026-10-28-2000" target="_blank" rel="noopener">See the show page</a>
     </div>
@@ -259,12 +263,12 @@
         <div><dt>Seating</dt><dd>Tables with a full view of the stage</dd></div>
         <div><dt>Good to know</dt><dd>21+, no drink minimum</dd></div>
       </dl>
-      <label class="choose"><input type="radio" name="choice" value="Fresh Goofs comedy show (8 pm, Goofs Comedy Club, Somerville)"><span class="dot"></span><span class="lbl">Pick this</span></label>
+      <label class="choose"><input type="radio" name="choice" value="Dinner at Moona, then Fresh Goofs comedy show (8 pm, Goofs Comedy Club, Somerville)"><span class="dot"></span><span class="lbl">Pick this</span></label>
     </div>
   </article>
 
   <!-- Rioja -->
-  <article class="ticket rioja" id="rioja" data-name="Rioja wine class">
+  <article class="ticket rioja" id="rioja" data-name="Rioja wine class, then tapas at Toro">
     <div class="art"><img src="img/rioja.jpg" alt="Vineyards beneath a stone church in Rioja, Spain" width="1080" height="405"></div>
     <div class="body">
       <span class="tag">Wine class in Kenmore Square</span>
@@ -274,7 +278,7 @@
       <dl class="plan">
         <dt>6:00</dt><dd>Class starts. Twelve seats around the table, pours as we go.</dd>
         <dt>During</dt><dd>History and grapes: Tempranillo, Garnacha, Graciano, Viura.</dd>
-        <dt>8:00</dt><dd>Class ends, just in time for dinner nearby to talk about our favorite pour.</dd>
+        <dt>8:15</dt><dd>Dinner at <a href="https://www.toro-restaurant.com/" target="_blank" rel="noopener">Toro</a> in the South End to keep the Spanish going: Barcelona-style tapas and a lively room.</dd>
       </dl>
       <a class="more" href="https://vinodivino.com/products/passport-series-spain-the-wines-of-rioja-wine-class" target="_blank" rel="noopener">See the class page</a>
     </div>
@@ -285,22 +289,22 @@
         <div><dt>Length</dt><dd>2 hours</dd></div>
         <div><dt>Good to know</dt><dd>12 guests max, reds and whites</dd></div>
       </dl>
-      <label class="choose"><input type="radio" name="choice" value="Rioja wine class (6 pm, Vinodivino, Kenmore Square)"><span class="dot"></span><span class="lbl">Pick this</span></label>
+      <label class="choose"><input type="radio" name="choice" value="Rioja wine class (6 to 8 pm, Vinodivino, Kenmore Square), then tapas at Toro"><span class="dot"></span><span class="lbl">Pick this</span></label>
     </div>
   </article>
 
   <!-- Blues -->
-  <article class="ticket blues" id="blues" data-name="Story of the Blues lecture">
+  <article class="ticket blues" id="blues" data-name="Blues lecture at Trident, then Lolita">
     <div class="art"><img src="img/blues.jpg" alt="Couples dancing in a juke joint in Clarksdale, Mississippi, 1939. Photo by Marion Post Wolcott, Library of Congress" width="896" height="672"></div>
     <div class="body">
-      <span class="tag">A lecture in a bar, Back Bay</span>
+      <span class="tag">A lecture in a bookstore, Back Bay</span>
       <h3>Three Chords and the Truth</h3>
-      <p class="venue">Lectures on Tap: the story of the blues</p>
-      <p class="desc">A professor, a bar and a microphone. Delvyn Case has taught popular music at Wheaton College for 25 years. He traces the blues from the Jim Crow South to the jazz, country, gospel and rock it gave birth to, and on into punk, metal and hip-hop. Part night class, part bar night.</p>
+      <p class="venue">Lectures on Tap at Trident Booksellers &amp; Cafe, Newbury Street</p>
+      <p class="desc">A professor and a microphone in one of Boston's favorite bookstores. Delvyn Case has taught popular music at Wheaton College for 25 years. He traces the blues from the Jim Crow South to the jazz, country, gospel and rock it gave birth to, and on into punk, metal and hip-hop. Part night class, part bookstore date.</p>
       <dl class="plan">
-        <dt>6:30</dt><dd>Doors and drinks. Find two seats with a view of the mic.</dd>
+        <dt>6:30</dt><dd>Browse the shelves at Trident, grab a drink and find two seats with a view of the mic.</dd>
         <dt>During</dt><dd>The talk: stories, records and how three chords became everything.</dd>
-        <dt>8:30</dt><dd>Wrap up, then argue about our favorite songs over dinner in Back Bay.</dd>
+        <dt>8:45</dt><dd>A short walk to <a href="https://www.lolitamexican.com/location/lolita-back-bay/" target="_blank" rel="noopener">Lolita</a> on Dartmouth Street for tacos and tequila, and to argue about our favorite songs.</dd>
       </dl>
       <a class="more" href="https://www.eventbrite.com/e/lectures-on-tap-three-chords-and-the-truth-the-story-of-the-blues-tickets-2001267909189" target="_blank" rel="noopener">See the lecture page</a>
     </div>
@@ -309,9 +313,9 @@
       <dl>
         <div><dt>Starts</dt><dd>6:30 pm</dd></div>
         <div><dt>Speaker</dt><dd>Prof. Delvyn Case</dd></div>
-        <div><dt>Good to know</dt><dd>Bar address comes with tickets</dd></div>
+        <div><dt>Where</dt><dd>Trident Booksellers, Newbury St</dd></div>
       </dl>
-      <label class="choose"><input type="radio" name="choice" value="Story of the Blues lecture (6:30 pm, Lectures on Tap, Back Bay)"><span class="dot"></span><span class="lbl">Pick this</span></label>
+      <label class="choose"><input type="radio" name="choice" value="Blues lecture (6:30 pm, Trident Booksellers, Newbury St), then Lolita"><span class="dot"></span><span class="lbl">Pick this</span></label>
     </div>
   </article>
 </main>
@@ -323,7 +327,6 @@
     <label class="field"><span>Anything else I should know? (optional)</span><textarea name="note" placeholder="Running late from work, don't love wine, want to grab food first..."></textarea></label>
     <button class="submit" type="submit" id="submit" disabled>Submit my pick</button>
     <p class="error" id="error" hidden></p>
-    <p class="also">Can't choose? Wine lets out at 8 and the comedy starts at 8 across the river. It's tight, but we could leave before the last pour. Say so in the note.</p>
   </div>
 </section>
 </form>
@@ -335,7 +338,7 @@
 
 <script>
   // ---------- Evening ruler: 5:45 to 10 pm, every option at its real time ----------
-  const START = 17.75, END = 22;
+  const START = 17.75, END = 22.25;
   const pct = h => ((h - START) / (END - START) * 100).toFixed(3) + '%';
   const ruler = document.getElementById('ruler');
   for (let h = 18; h <= 22; h++) {
@@ -344,14 +347,18 @@
     ruler.appendChild(t);
   }
   [
-    { id: 'rioja',  from: 18,   to: 20,   top: 0.2, label: 'Rioja wine class', t: '6–8' },
-    { id: 'blues',  from: 18.5, to: 20.5, top: 2.7, label: 'Blues lecture',   t: '6:30–8:30' },
-    { id: 'comedy', from: 20,   to: 21.5, top: 5.2, label: 'Comedy show',     t: '8–9:30' },
+    { id: 'rioja',  from: 18,    to: 20,    top: 0.2, label: 'Rioja wine class', t: '6–8' },
+    { id: 'rioja',  from: 20.25, to: 21.75, top: 0.2, label: 'Toro', dinner: true },
+    { id: 'blues',  from: 18.5,  to: 20.5,  top: 2.7, label: 'Blues at Trident', t: '6:30–8:30' },
+    { id: 'blues',  from: 20.75, to: 22.25, top: 2.7, label: 'Lolita', dinner: true },
+    { id: 'comedy', from: 18.25, to: 19.6,  top: 5.2, label: 'Moona', dinner: true },
+    { id: 'comedy', from: 20,    to: 21.5,  top: 5.2, label: 'Comedy show',      t: '8–9:30' },
   ].forEach((s, i) => {
     const a = document.createElement('a');
     a.className = 'slot'; a.href = '#' + s.id;
     a.style.cssText = `left:${pct(s.from)};width:calc(${pct(s.to)} - ${pct(s.from)});top:${s.top}rem;background:var(--${s.id});animation-delay:${200 + i * 160}ms`;
-    a.innerHTML = `${s.label} <small>${s.t}</small>`;
+    if (s.dinner) a.classList.add('dinner');
+    a.innerHTML = s.t ? `${s.label} <small>${s.t}</small>` : `${s.label} <small>dinner</small>`;
     ruler.appendChild(a);
   });
 
