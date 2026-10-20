@@ -86,8 +86,8 @@
     font: 600 .9rem/1 var(--sans);
     box-shadow: 0 6px 20px rgba(0,0,0,.25);
     transform-origin: left center;
-    animation: draw .9s cubic-bezier(.2,.7,.2,1) both;
   }
+  .ready .slot { animation: draw .9s cubic-bezier(.2,.7,.2,1) backwards; }
   .slot small { font-weight: 400; opacity: .85; }
   @keyframes draw { from { transform: scaleX(0); opacity: 0; } to { transform: none; opacity: 1; } }
 
@@ -220,7 +220,7 @@
     .slot small { display: none; }
     .sun { top: 1.25rem; right: -1.5rem; width: 7.5rem; }
     .horizon { display: none; }
-    .tick.sunset b { bottom: auto; top: -1.4rem; }
+    .tick.sunset b { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -361,10 +361,12 @@
   ].forEach((s, i) => {
     const a = document.createElement('a');
     a.className = 'slot'; a.href = '#' + s.id;
-    a.style.cssText = `left:${pct(s.from)};width:calc(${pct(s.to)} - ${pct(s.from)});top:${s.top}rem;background:var(--${s.id});animation-delay:${400 + i * 160}ms`;
+    a.style.cssText = `left:${pct(s.from)};width:calc(${pct(s.to)} - ${pct(s.from)});top:${s.top}rem;background:var(--${s.id});animation-delay:${200 + i * 160}ms`;
     a.innerHTML = `${s.label} <small>${s.t}</small>`;
     ruler.appendChild(a);
   });
+
+  requestAnimationFrame(() => document.body.classList.add('ready'));
 
   // ---------- Picking a ticket ----------
   const tickets = [...document.querySelectorAll('.ticket')];
